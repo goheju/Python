@@ -1,0 +1,74 @@
+def crear():
+    matriz = []
+    print(matriz)
+    for x in range(0,usuarios):
+        matriz0 = [1,2,3]
+        matriz.append (matriz0)
+    x +=1
+    return matriz
+
+#crear una tupla con las asignaturas del usuario, que te pregunte cuantas asignaturas vas ha añadir.
+def escribir():
+    matriz= crear () 
+    print (matriz)
+
+    for x in range(0,usuarios):
+        print (x)
+        a = input ("Dame el nombre ")
+        matriz[x][0] = a
+        b = input ("Dame la ip ")
+        matriz[x][1] = b
+        c = input ("Dame el correo ")
+        matriz[x][2] = c
+        dominio = c.split("@")
+        print (dominio)
+        Tdominio = dominio[1] 
+        matriz[x].insert (3,Tdominio)
+        dni = input ("Dame el DNI ")
+        letra = dni[8]
+        numeros = dni[0:7]
+        matriz[x].insert (4,numeros)
+        matriz[x].insert (5,letra)
+        tuplas = int(input ("Cuantas asignaturas? "))
+        for y in range(0,tuplas):
+            asignatura = input ("Nombre de la asignatura ")
+            nota = input ("Nota de la asignatura ")
+            tupla = (asignatura,nota)
+            topla = list(tupla)
+            aprueba = input ("Aprueba? ")
+            topla.append(aprueba)
+            tupla = tuple(topla)
+            matriz.append(tupla)
+        y += 1
+    x += 1
+    return matriz
+
+
+def imprimir():
+    matriz= escribir ()
+    print (matriz)
+    for x in range(0,usuarios):
+        a = matriz[x][0]
+        b = matriz[x][1]
+        c = matriz[x][2]
+        d = matriz[x][3]
+        e = matriz[x][4]
+        f = matriz[x][5]
+        print ("El nombre es",a,"La IP es",b,"El correo es",c,"El dominio es",d,"El DNI es",e,f)
+    x += 1       
+
+#!/usr/bin/env python
+def main(args):
+    return 0
+#1 nombre
+#2 ip
+#3 correo
+#quiero 3 usuarios
+#que pregunte por pantalla usando funciones
+usuarios = int(input ("Dame el numero de usuarios "))
+imprimir ()
+
+
+if __name__ == '__main__':
+    import sys
+    sys.exit(main(sys.argv))
