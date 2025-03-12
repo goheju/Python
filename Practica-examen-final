@@ -131,18 +131,22 @@ def leer():
 	ndni = (partido[17])
 	ldni = (partido[25])
 	nas = (partido.count("Asignatura"))
-	x = 0
-	z 
+	x = 1
+	z = 33
+	w = 37
+	lista = []
 	while x <= nas:
-		y = x + 2
-		
-		
-	x = 0
+		asignatura = (partido[z])
+		nota = (partido[w])
+		lista.append(asignatura)
+		lista.append(nota)
+		x = x+1
+		z += 8
+		w += 8
 	verificardni(ndni,ldni)
-	print (partido)
-	diccionar(nombre,ip,mail,ndni,ldni)
+	diccionar(nombre,ip,mail,ndni,ldni,nas,lista)
 	archivo.close
-
+	
 	
 def chequearip(ip):
 	if re.search(r'\d{1,3}\.\d{1,3}\.\d{1,3}$',ip):
@@ -150,7 +154,7 @@ def chequearip(ip):
 	else:
 		print("la IP ",ip," es incorrecta")
 def verificarmail(mail):
-	if re.search(r'\w+[@]\w+\.\[a-z]{3}$',mail):
+	if re.search(r'\w+[@]\w+\.\w{3}$',mail):
 		return mail
 	else:
 		print ("El mail ",mail," es incorrecto")
@@ -166,17 +170,21 @@ def verificardni(ndni,ldni):
 	else:
 		print ("Fallo en el DNI")
 		print (ndni)
-def diccionar(nombre,ip,mail,ndni,ldni): 
+def diccionar(nombre,ip,mail,ndni,ldni,nas,lista): 
 	ip = chequearip(ip)
 	mail = verificarmail(mail)
 	dic = {
 	'nombre': nombre,
 	'ip': ip,
 	'mail': mail,
-	'ndni': ndni
-	
+	'ndni': ndni,
+	'ldni': ldni,
+	'asignaturas': lista	
 	}
 	print (dic)
+	archivo = open("guardar.txt","w")
+	archivo.write("El nombre es: ")
+	archivo.write(dic["nombre"])
 #!/usr/bin/env python
 def main(args):
     return 0
