@@ -1,3 +1,6 @@
+import re
+import sys
+import argparse
 def crear():
     matriz = []
     print(matriz)
@@ -30,15 +33,16 @@ def escribir():
         matriz[x].insert (4,numeros)
         matriz[x].insert (5,letra)
         tuplas = int(input ("Cuantas asignaturas? "))
+        matriz[x].insert (6,tuplas)
+        tupla = ("")
         for y in range(0,tuplas):
+            topla = list(tupla)
             asignatura = input ("Nombre de la asignatura ")
             nota = input ("Nota de la asignatura ")
-            tupla = (asignatura,nota)
-            topla = list(tupla)
-            aprueba = input ("Aprueba? ")
-            topla.append(aprueba)
+            topla.append(asignatura)
+            topla.append(nota)
             tupla = tuple(topla)
-            matriz.append(tupla)
+        matriz[x].append(tupla)
         y += 1
     x += 1
     return matriz
@@ -46,7 +50,6 @@ def escribir():
 
 def imprimir():
     matriz= escribir ()
-    print (matriz)
     for x in range(0,usuarios):
         a = matriz[x][0]
         b = matriz[x][1]
@@ -55,8 +58,125 @@ def imprimir():
         e = matriz[x][4]
         f = matriz[x][5]
         print ("El nombre es",a,"La IP es",b,"El correo es",c,"El dominio es",d,"El DNI es",e,f)
-    x += 1       
+    x += 1 
+    return matriz
+    
+def indexar():
+	matriz= imprimir ()
+	print (matriz)
+	diccionario = {}
+	for x in range (0,usuarios):
+		diccionario.update({
+			"nombre" : matriz[x][0],
+			"ip" : matriz[x][1],
+			"correo" : matriz[x][2],
+			"dominio" : matriz[x][3],
+			"dni" : {
+			"ndni" : matriz[x][4],
+			"ldni" : matriz[x][5],
+			},
+			"nas" : matriz[x][6],
+			"asignaturas" : matriz[x][7],
+		})
 
+	return diccionario
+
+def guardar():
+	diccionario = indexar ()
+	nas = diccionario["nas"]
+	archivo = open("save.txt", "w")
+	nombre = diccionario["nombre"]
+	archivo.write("El nombre es: ")
+	archivo.write(nombre)
+	ip = diccionario["ip"]
+	archivo.write(" La ip es: ")
+	archivo.write(ip)
+	correo = diccionario["correo"]
+	archivo.write(" El correo es: ")
+	archivo.write(correo)
+	archivo.write(" El numero de dni es: ")
+	ndni = diccionario["dni"]["ndni"]
+	archivo.write(ndni)
+	archivo.write("  La letra del dni es : ")
+	ldni = diccionario["dni"]["ldni"]
+	archivo.write(ldni)
+	asignaturas = diccionario["asignaturas"]
+	archivo.write(" Las asignaturas son :")
+	Lasignaturas = list(asignaturas)
+	x = 0
+	while x <= nas:
+		y = x + 1
+		asignatura = Lasignaturas[x]
+		nota = Lasignaturas[y]
+		archivo.write("  Asignatura : ")
+		archivo.write(asignatura)
+		archivo.write("  Nota : ")
+		archivo.write(nota)
+		if x != nas:
+			archivo.write(",")
+		x += 2
+	archivo.close
+
+def leer():
+	parser = argparse.ArgumentParser()
+	parser.add_argument("fichero")
+	args = parser.parse_args()
+	archivo = open(args.fichero,"r")
+	archivador = archivo.read()
+	partido = archivador.split(" ")
+	nombre = (partido[3])
+	ip = (partido[7])
+	mail = (partido[11])
+	verificarmail(mail)
+	ndni = (partido[17])
+	ldni = (partido[25])
+	nas = (partido.count("Asignatura"))
+	x = 0
+	z 
+	while x <= nas:
+		y = x + 2
+		
+		
+	x = 0
+	verificardni(ndni,ldni)
+	print (partido)
+	diccionar(nombre,ip,mail,ndni,ldni)
+	archivo.close
+
+	
+def chequearip(ip):
+	if re.search(r'\d{1,3}\.\d{1,3}\.\d{1,3}$',ip):
+		return ip
+	else:
+		print("la IP ",ip," es incorrecta")
+def verificarmail(mail):
+	if re.search(r'\w+[@]\w+\.\[a-z]{3}$',mail):
+		return mail
+	else:
+		print ("El mail ",mail," es incorrecto")
+def verificardni(ndni,ldni):
+	dni = "a"
+	if re.search(r'\d{8}',ndni):
+		if re.search(r'[a-zA-Z]',ldni):
+			return dni
+			print (dni)
+		else:
+			print ("Fallo en el dni")
+			print (ldni)	
+	else:
+		print ("Fallo en el DNI")
+		print (ndni)
+def diccionar(nombre,ip,mail,ndni,ldni): 
+	ip = chequearip(ip)
+	mail = verificarmail(mail)
+	dic = {
+	'nombre': nombre,
+	'ip': ip,
+	'mail': mail,
+	'ndni': ndni
+	
+	}
+	print (dic)
 #!/usr/bin/env python
 def main(args):
     return 0
@@ -65,9 +185,9 @@ def main(args):
 #3 correo
 #quiero 3 usuarios
 #que pregunte por pantalla usando funciones
-usuarios = int(input ("Dame el numero de usuarios "))
-imprimir ()
-
+#usuarios = int(input ("Dame el numero de usuarios "))
+#guardar ()
+leer ()
 
 if __name__ == '__main__':
     import sys
